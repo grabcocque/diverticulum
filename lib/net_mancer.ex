@@ -73,12 +73,12 @@ defmodule NetMancer do
     case smoosh_active_pair(net) do
       {:apply, new_net} ->
         charts = charts ++ [mermaid_incantation(new_net)]
-        IO.puts("Applied reduction rule!")
+        IO.puts("Reduction: apply")
         embrace_normalcy(new_net, charts)
 
       {:expand, new_net} ->
         charts = charts ++ [mermaid_incantation(new_net)]
-        IO.puts("Applied expansion rule!")
+        IO.puts("Reduction: expand")
         embrace_normalcy(new_net, charts)
 
       :no_rule ->
@@ -90,6 +90,7 @@ defmodule NetMancer do
     # Find the first active pair
     case detect_smooshable_active_pair(net) do
       nil ->
+        IO.puts("Reduction: terminate\n")
         :no_rule
 
       {function_id, value_id} ->
@@ -233,7 +234,7 @@ defmodule NetMancer do
 
     name =
       case agent do
-        %{type: :value} -> "N#{agent.data}"
+        %{type: :value} -> "N=#{agent.data}"
         %{type: :function, data: {op_name, _}} -> "#{op_name}"
         _ -> "Agent#{id}"
       end

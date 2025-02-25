@@ -40,7 +40,7 @@ For full implementation details, view the [source code on GitHub](https://github
 This function:
 
 - Tries to apply a reduction rule to the current net
-- If successful, creates a diagram of the result, then recursively continues
+- If successful, creates a graph of the result, then recursively continues
 - If no more rules apply, returns the final net and all charts
 
 ### 3. Finding & Applying Rules: smoosh_active_pair/1
@@ -85,7 +85,7 @@ net = NetMancer.new_net()
 |> NetMancer.conjure_agent(:function, 2, {"Add", fn x -> x + 5 end})
 |> NetMancer.conjure_agent(:value, 1, 3)
 |> NetMancer.forge_connection({1, 1}, {2, 1})
-{result_net, diagrams} = NetMancer.embrace_normalcy(net)
+{result_net, graphs} = NetMancer.embrace_normalcy(net)
 ```
 
 - Initial Net:
@@ -105,7 +105,26 @@ net = NetMancer.new_net()
   - No connections
   - No more active pairs, so evaluation is complete
 
-The diagrams generated at each step show this transformation visually via Mermaid.
+The graphs generated at each step show this transformation visually via Mermaid.
+
+### Initial graph
+
+```mermaid
+graph LR
+  1["function 1<br/>Add 5<br/>P1"]
+      2["value 2<br/>N=3<br/>P1"]
+
+  1 ===>|1↔1| 2
+```
+
+### After reduction
+
+```mermaid
+graph LR
+  3["value 3<br/>N=8<br/>P1"]
+
+  
+```
 
 ## The True Magic of Interaction Nets
 

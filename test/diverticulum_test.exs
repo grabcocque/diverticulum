@@ -12,25 +12,30 @@ defmodule NetMancerTest do
       # Connect function's principal port to value's principal port
       |> NetMancer.forge_connection({1, 1}, {2, 1})
 
+    IO.puts("### Initial net structure ###\n")
+
     agents = IO.inspect(net.agents, label: "Agents")
     connections = IO.inspect(net.connections, label: "Connections")
 
     assert_connections_structure(connections)
     assert_agent_structure(agents)
 
-    # {result_net, diagrams} = NetMancer.evaluate(net)
-    # Enum.each(diagrams, &IO.puts/1)
+    IO.puts("\n### Reducing the net ###\n")
+    initial_graph = NetMancer.mermaid_incantation(net)
+    {result_net, graphs} = NetMancer.embrace_normalcy(net, [initial_graph])
 
-    #   # Evaluate the net and collect the Mermaid diagrams
-    #   {result_net, diagrams} = NetMancer.evaluate(net)
-    #
-    #   # Print the diagrams
-    #   Enum.each(diagrams, &IO.puts/1)
-    #
-    #   # Assert the final result to confirm expected behavior
-    #   final_result = result_net.agents |> Map.values() |> hd() |> Map.get(:data)
-    #   IO.puts("Final result: #{final_result}")
-    #   assert final_result == 8
+    IO.puts("### Step-by-step graphs ###\n")
+    Enum.each(graphs, &IO.puts/1)
+
+    # Assert the final result to confirm expected behavior
+    assert length(Map.keys(result_net.agents)) == 1, "Expected only one agent after reduction"
+
+    assert length(Map.keys(result_net.connections)) == 0,
+           "Expected no connections after reduction"
+
+    final_result = result_net.agents |> Map.values() |> hd() |> Map.get(:data)
+    IO.puts("### Final result: #{final_result} ###\n")
+    assert final_result == 8
   end
 
   defp assert_connections_structure(connections) do
