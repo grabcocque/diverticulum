@@ -69,31 +69,26 @@ defmodule NetMancer do
   @doc """
   Performs a complete evaluation of the net until no more reductions can occur.
   """
-  def evaluate(net) do
-    {reduced_net, charts} = reduce_until_normal(net, [])
-    {reduced_net, charts}
-  end
-
-  defp reduce_until_normal(net, charts) do
-    case try_apply_rule(net) do
+  def embrace_normalcy(net, charts \\ []) do
+    case smoosh_active_pair(net) do
       {:apply, new_net} ->
         charts = charts ++ [mermaid_incantation(new_net)]
         IO.puts("Applied reduction rule!")
-        reduce_until_normal(new_net, charts)
+        embrace_normalcy(new_net, charts)
 
       {:expand, new_net} ->
         charts = charts ++ [mermaid_incantation(new_net)]
         IO.puts("Applied expansion rule!")
-        reduce_until_normal(new_net, charts)
+        embrace_normalcy(new_net, charts)
 
       :no_rule ->
         {net, charts}
     end
   end
 
-  defp try_apply_rule(net) do
+  defp smoosh_active_pair(net) do
     # Find the first active pair
-    case find_active_pair(net) do
+    case detect_smooshable_active_pair(net) do
       nil ->
         :no_rule
 
@@ -127,7 +122,7 @@ defmodule NetMancer do
 
         # Handle any remaining connections by reconnecting them to result
         new_connections =
-          reconnect_ports(
+          make_new_friends(
             net.connections,
             function_id,
             value_id,
@@ -146,7 +141,7 @@ defmodule NetMancer do
     end
   end
 
-  defp find_active_pair(net) do
+  defp detect_smooshable_active_pair(net) do
     # Use Enum.reduce_while to find the first matching active pair
     Enum.reduce_while(net.connections, nil, fn
       # Check each connection
@@ -173,7 +168,7 @@ defmodule NetMancer do
     end)
   end
 
-  defp reconnect_ports(connections, function_id, value_id, new_id) do
+  defp make_new_friends(connections, function_id, value_id, new_id) do
     # First, filter out connections directly between the eliminated agents
     remaining_connections =
       connections
