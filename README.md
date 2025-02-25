@@ -35,7 +35,7 @@ Let me guide you through the entire process, from incantation to revelation:
 
 ### 2. The Reduction Loop: embrace_normalcy/2
 
-For full implementation details, view the [source code on GitHub](https://github.com/grabcocque/diverticulum/blob/main/lib/diverticulum.ex#L22-L33).
+For full implementation details, view the [source code on GitHub](https://github.com/grabcocque/diverticulum/blob/main/lib/net_mancer.ex#L22-L33).
 
 This function:
 
@@ -45,7 +45,7 @@ This function:
 
 ### 3. Finding & Applying Rules: smoosh_active_pair/1
 
-For full implementation details, view the [source code on GitHub](https://github.com/grabcocque/diverticulum/blob/main/lib/diverticulum.ex#L34)
+For full implementation details, view the [source code on GitHub](https://github.com/grabcocque/diverticulum/blob/main/lib/net_mancer.ex#L34)
 
 This function:
 
@@ -59,7 +59,7 @@ This function:
 
 ### 4. Identifying Active Pairs: detect_smooshable_active_pair/1
 
-For more details, see the [source code on GitHub](https://github.com/grabcocque/diverticulum/blob/main/lib/diverticulum.ex#L42).
+For more details, see the [source code on GitHub](https://github.com/grabcocque/diverticulum/blob/main/lib/net_mancer.ex#L42).
 
 This function:
 
@@ -69,7 +69,7 @@ This function:
 
 ### 5. Rewiring Connections: make_new_friends/4
 
-For complete details on how reconnect_ports/4 is implemented, view it on GitHub [here](https://github.com/grabcocque/diverticulum/blob/main/lib/diverticulum.ex#L64).
+For complete details on how reconnect_ports/4 is implemented, view it on GitHub [here](https://github.com/grabcocque/diverticulum/blob/main/lib/net_mancer.ex#L64).
 
 This function:
 
